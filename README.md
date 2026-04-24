@@ -26,7 +26,7 @@ composer require wapkit/laravel-bot
 php artisan wapkit:install
 ```
 
-Listo. El comando de instalación publica el archivo de configuración y ejecuta las tres migraciones del paquete automáticamente.
+Listo. El comando de instalación publica el archivo de configuración, ejecuta las migraciones y genera automáticamente el `WhatsAppServiceProvider` ya registrado en tu app.
 
 ---
 
@@ -234,7 +234,19 @@ class PedidoHandler implements BotHandlerInterface
 }
 ```
 
-### Paso 4 — Registrá todo en un ServiceProvider
+### Paso 4 — Generá y registrá el ServiceProvider
+
+Usá el comando incluido para generar el `WhatsAppServiceProvider` y registrarlo automáticamente en `bootstrap/providers.php`:
+
+```bash
+php artisan wapkit:make-provider
+```
+
+Esto crea `app/Providers/WhatsAppServiceProvider.php` con toda la estructura lista para completar, y lo agrega a `bootstrap/providers.php` sin que tengas que tocarlo manualmente.
+
+> Si usás `wapkit:install`, este paso ya se ejecuta automáticamente.
+
+Luego completá el provider con tus handlers y context builder:
 
 ```php
 // app/Providers/WhatsAppServiceProvider.php
@@ -271,15 +283,6 @@ class WhatsAppServiceProvider extends ServiceProvider
 }
 ```
 
-Registrá el provider en `bootstrap/providers.php`:
-
-```php
-return [
-    App\Providers\AppServiceProvider::class,
-    App\Providers\WhatsAppServiceProvider::class,
-];
-```
-
 ### Paso 5 — Agregá las palabras clave de tu dominio
 
 Publicá la configuración (si aún no lo hiciste) y extendé el array `keywords`:
@@ -307,7 +310,7 @@ Ahora ejecutá `php artisan serve`, apuntá tu webhook a la URL local con ngrok 
 
 Cada mensaje entrante pasa por este flujo:
 
-```
+```text
 Usuario de WhatsApp
      ↓
 POST /webhook/whatsapp
@@ -533,7 +536,8 @@ Message::where('phone', '591700000001')->latest()->take(20)->get();
 
 | Comando | Descripción |
 | --- | --- |
-| `php artisan wapkit:install` | Publicar configuración + ejecutar migraciones |
+| `php artisan wapkit:install` | Publicar configuración, ejecutar migraciones y generar el ServiceProvider |
+| `php artisan wapkit:make-provider` | Generar `WhatsAppServiceProvider` y registrarlo en `bootstrap/providers.php` |
 | `php artisan wapkit:make-handler {Nombre}` | Generar un stub de handler |
 | `php artisan wapkit:make-context {Nombre}` | Generar un stub de ContextBuilder |
 
