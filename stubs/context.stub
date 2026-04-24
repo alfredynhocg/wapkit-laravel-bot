@@ -1,0 +1,60 @@
+<?php
+
+namespace {{ namespace }};
+
+use Wapkit\LaravelBot\Contracts\ContextBuilderInterface;
+
+class {{ class }} implements ContextBuilderInterface
+{
+    /**
+     * Return plain text with your business data.
+     * This is injected into the AI system prompt.
+     * Query your models here and format them as readable text.
+     */
+    public function buildContext(?string $area = null): string
+    {
+        return <<<CTX
+        EMPRESA: Mi Empresa S.A.
+        DIRECCIÓN: Av. Principal 123
+        HORARIOS: Lunes a Viernes 9:00 - 18:00
+        TELÉFONO: +1234567890
+        EMAIL: contacto@miempresa.com
+
+        SERVICIOS:
+        - Servicio A: descripción breve
+        - Servicio B: descripción breve
+        CTX;
+    }
+
+    /**
+     * Define the AI persona, rules, and tone for your domain.
+     * $context is the string returned by buildContext().
+     */
+    public function buildSystemPrompt(string $context): string
+    {
+        return <<<SYSTEM
+        Eres el asistente virtual de Mi Empresa. Atiendes clientes por WhatsApp.
+        Respondé únicamente con información del contexto. Si algo no está, decí
+        "consultá con nuestro equipo" y ofrecé el teléfono o email.
+        Tono amable y profesional. Máximo 4 oraciones por respuesta.
+
+        INFORMACIÓN DE LA EMPRESA:
+        {$context}
+        SYSTEM;
+    }
+
+    /**
+     * Map thematic area names to trigger keywords.
+     * Used to pre-filter context before the AI call (reduces tokens).
+     *
+     * Example:
+     *   ['soporte' => ['problema', 'falla', 'error'],
+     *    'ventas'  => ['precio', 'comprar', 'cotizar']]
+     */
+    public function thematicAreas(): array
+    {
+        return [
+            // 'area' => ['keyword1', 'keyword2'],
+        ];
+    }
+}

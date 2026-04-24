@@ -1,0 +1,24 @@
+<?php
+
+namespace {{ namespace }};
+
+use Wapkit\LaravelBot\Contracts\BotHandlerInterface;
+use Wapkit\LaravelBot\Core\ConversationManager;
+use Wapkit\LaravelBot\Services\WhatsAppService;
+
+class {{ class }} implements BotHandlerInterface
+{
+    public function __construct(
+        private readonly WhatsAppService     $wa,
+        private readonly ConversationManager $manager,
+    ) {}
+
+    /**
+     * Called when this handler's intent is detected from user text,
+     * or when a registered button is pressed.
+     */
+    public function handle(string $from, array $context): void
+    {
+        $this->wa->sendText($from, '👋 Hola! Este es el handler {{ class }}.');
+    }
+}

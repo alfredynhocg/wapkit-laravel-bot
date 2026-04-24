@@ -1,0 +1,31 @@
+{
+    "name": "wapkit/laravel-bot",
+    "description": "Extensible WhatsApp chatbot engine for Laravel. Plug in your own handlers and context per project.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "illuminate/support": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/database": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/http": "^10.0|^11.0|^12.0|^13.0",
+        "illuminate/cache": "^10.0|^11.0|^12.0|^13.0",
+        "prism-php/prism": "^0.100.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wapkit\\LaravelBot\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wapkit\\LaravelBot\\WhatsAppBotServiceProvider"
+            ],
+            "aliases": {
+                "WapBot": "Wapkit\\LaravelBot\\Facades\\WapBot"
+            }
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
