@@ -5,6 +5,7 @@ namespace Wapkit\LaravelBot;
 use Wapkit\LaravelBot\Console\InstallCommand;
 use Wapkit\LaravelBot\Console\MakeContextCommand;
 use Wapkit\LaravelBot\Console\MakeHandlerCommand;
+use Wapkit\LaravelBot\Console\MakeServiceProviderCommand;
 use Wapkit\LaravelBot\Contracts\ContextBuilderInterface;
 use Wapkit\LaravelBot\Contracts\IntentResolverInterface;
 use Wapkit\LaravelBot\Core\HandlerRegistry;
@@ -49,6 +50,7 @@ class WhatsAppBotServiceProvider extends ServiceProvider
                 InstallCommand::class,
                 MakeHandlerCommand::class,
                 MakeContextCommand::class,
+                MakeServiceProviderCommand::class,
             ]);
         }
 

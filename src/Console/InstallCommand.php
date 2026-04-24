@@ -36,6 +36,10 @@ class InstallCommand extends Command
         $this->callSilent('migrate', ['--path' => 'vendor/wapkit/laravel-bot/database/migrations']);
         $this->info('  ✔ Database tables created');
 
+        // 3. Generate WhatsAppServiceProvider
+        $this->comment('→ Generating WhatsAppServiceProvider...');
+        $this->call('wapkit:make-provider');
+
         $this->info('');
         $this->info(' ✅ WapKit installed successfully!');
         $this->info('');
